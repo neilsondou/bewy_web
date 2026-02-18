@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Download, Monitor, Github, Cpu, ArrowDown } from 'lucide-react';
 import { Button } from './components/Button';
 import { FEATURES_DATA, DOWNLOAD_LINK, BOOT_SEQUENCE_DATA } from './constants';
@@ -20,7 +20,7 @@ const TEXTS = {
     footerDesc: "Join the development of the next generation lightweight editor.",
     footerDownload: "DOWNLOAD v0.0.1",
     copyright: "© 2026 BEWY PROJECT",
-    msAlert: "System Alert: Package not yet available in Microsoft Store registry. Please use direct download."
+    msAlert: "Package not yet available in Microsoft Store registry. Please use direct download."
   },
   zh: {
     buildVersion: "构建版本: 0.0.1-ALPHA",
@@ -36,7 +36,7 @@ const TEXTS = {
     footerDesc: "加入下一代轻量级编辑器的开发之旅。",
     footerDownload: "下载版本 v0.0.1",
     copyright: "© 2026 BEWY PROJECT",
-    msAlert: "系统警告：该软件包尚未在 Microsoft Store 注册表中上架。请使用直接下载。"
+    msAlert: "该软件包尚未在 Microsoft Store 注册表中上架。请使用直接下载。"
   }
 };
 
@@ -44,7 +44,7 @@ const App: React.FC = () => {
   const [lang, setLang] = useState<Lang>('en');
   const [bootLineIndex, setBootLineIndex] = useState(0);
   const [showHero, setShowHero] = useState(false);
-  
+
   // Detect system language on mount
   useEffect(() => {
     const browserLang = navigator.language.toLowerCase();
@@ -59,7 +59,7 @@ const App: React.FC = () => {
 
   // Boot sequence animation
   useEffect(() => {
-    // Reset animation when language changes, or just let it play out? 
+    // Reset animation when language changes, or just let it play out?
     // Let's reset purely for effect if user switches mid-boot, but mostly strictly runs once logically.
     // For simplicity, we restart typing if lang changes to match the vibe.
     setBootLineIndex(0);
@@ -70,7 +70,7 @@ const App: React.FC = () => {
     if (bootLineIndex < bootSequence.length) {
       const timer = setTimeout(() => {
         setBootLineIndex(prev => prev + 1);
-      }, 300 + Math.random() * 400); 
+      }, 300 + Math.random() * 400);
       return () => clearTimeout(timer);
     } else {
       setTimeout(() => setShowHero(true), 500);
@@ -91,12 +91,12 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
-      
+
       {/* Header / Nav */}
       <nav className={`fixed top-0 w-full z-40 bg-black/80 backdrop-blur-sm border-b border-white/20 px-6 py-4 flex justify-between items-center transition-opacity duration-1000 ${showHero ? 'opacity-100' : 'opacity-0'}`}>
-        
+
         {/* Language Switcher */}
-        <button 
+        <button
           onClick={toggleLang}
           className="font-mono text-sm hover:text-white text-gray-400 border border-transparent hover:border-gray-600 px-2 py-1 transition-all"
         >
@@ -111,7 +111,7 @@ const App: React.FC = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center p-6 border-b border-white/10">
         <div className="max-w-4xl w-full space-y-8">
-          
+
           {/* Boot Terminal Output */}
           <div className="font-mono text-sm md:text-base text-gray-400 min-h-[160px] mb-8 p-4 border-l-2 border-gray-800">
             {bootSequence.slice(0, bootLineIndex).map((line, i) => (
@@ -140,7 +140,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="absolute top-0 right-0 -mt-2 -mr-2 w-3 h-3 bg-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Button>
-              
+
               <Button variant="secondary" onClick={handleMicrosoftDownload} className="opacity-80">
                 <div className="flex items-center gap-3">
                   <Monitor className="w-5 h-5" />
@@ -164,20 +164,20 @@ const App: React.FC = () => {
             <h2 className="text-4xl font-bold uppercase tracking-tight">{t.interfaceTitle}</h2>
             <div className="font-mono text-sm text-gray-500">{t.interfaceMeta}</div>
           </div>
-          
+
           <div className="relative group">
             {/* Decorative frame elements */}
             <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-white"></div>
             <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-white"></div>
-            
+
             <div className="border-2 border-white/20 overflow-hidden bg-black aspect-video relative">
-               <img 
-                 src="image.png" 
-                 alt="Bewy Interface Screenshot" 
+               <img
+                 src="image.png"
+                 alt="Bewy Interface Screenshot"
                  className="w-full h-full object-cover"
                />
             </div>
-            
+
             <p className="mt-4 font-mono text-xs text-center text-gray-500">
               {t.interfaceNote}
             </p>
@@ -204,7 +204,7 @@ const App: React.FC = () => {
                 <p className="text-gray-400 text-sm leading-relaxed font-mono">
                   {feature.description}
                 </p>
-                
+
                 {/* Corner Accents */}
                 <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></div>
               </div>
@@ -237,7 +237,7 @@ const App: React.FC = () => {
           <Cpu className="w-16 h-16 mx-auto animate-pulse" strokeWidth={1} />
           <h2 className="text-3xl font-bold font-mono">{t.footerReady}</h2>
           <p className="text-gray-400">{t.footerDesc}</p>
-          
+
           <div className="pt-8">
             <Button onClick={handleDirectDownload}>
               {t.footerDownload}
@@ -250,7 +250,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
-      
+
       <style>{`
         .text-stroke-white {
           -webkit-text-stroke: 1px white;
