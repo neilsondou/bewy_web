@@ -1,406 +1,97 @@
-﻿<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BEWY</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bewy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
       :root {
-        --bg: #000000;
-        --fg: #f2f4f7;
-        --accent: #f2f4f7;
-        --accent-dim: rgba(0, 0, 0, 0.35);
+        --crt-flicker: 0.02;
       }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
       body {
-        margin: 0;
-        width: 100%;
-        min-height: 100%;
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Space Mono', 'Courier New', monospace;
         overflow-x: hidden;
-        background: var(--bg);
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000; 
+        border-left: 1px solid #333;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #fff; 
+        border: 2px solid #000;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ccc; 
       }
 
-      body {
-        font-family: "Consolas", "Courier New", monospace;
-        color: var(--fg);
-      }
-
-      #fx {
+      /* CRT Scanline Effect */
+      .scanlines {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.2) 50%,
+          rgba(0,0,0,0.2)
+        );
+        background-size: 100% 4px;
         position: fixed;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        image-rendering: pixelated;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        pointer-events: none;
       }
 
-      .center {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 28px;
-        text-align: center;
-        padding: 24px;
+      /* Cursor Blink */
+      .cursor-blink {
+        animation: blink 1s step-end infinite;
       }
-
-      .title {
-        margin: 0;
-        font-size: clamp(28px, 7vw, 84px);
-        line-height: 1;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--fg);
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
-      }
-
-      .loader {
-        margin: 0;
-        min-height: 5.6em;
-        font-size: clamp(13px, 2vw, 18px);
-        letter-spacing: 0.03em;
-        color: #d7dbe0;
-        opacity: 0.92;
-        white-space: pre-line;
-      }
-
-      .cursor {
-        display: inline-block;
-        width: 0.62em;
-        animation: blink 0.9s steps(1, end) infinite;
-      }
-
       @keyframes blink {
-        50% {
-          opacity: 0;
-        }
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
       }
 
-      .actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+      /* Glitch Text Effect on Hover */
+      .glitch-hover:hover {
+        animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        color: #fff;
       }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        appearance: none;
-        border: 1px solid var(--accent);
-        background: rgba(0, 0, 0, 0.35);
-        color: var(--accent);
-        padding: 12px 26px;
-        font: 700 16px/1 "Consolas", "Courier New", monospace;
-        letter-spacing: 0.08em;
-        text-decoration: none;
-        text-transform: uppercase;
-        border-radius: 2px;
-        box-shadow:
-          0 0 0 1px var(--accent-dim) inset,
-          0 0 14px rgba(255, 255, 255, 0.22);
-        transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
-      }
-
-      .btn:hover {
-        background: rgba(255, 255, 255, 0.12);
-        transform: translateY(-1px);
-        box-shadow:
-          0 0 0 1px rgba(255, 255, 255, 0.45) inset,
-          0 0 18px rgba(255, 255, 255, 0.35);
-      }
-
-      .btn:active {
-        transform: translateY(0);
-      }
-
-      .btn-doc {
-        border-color: rgba(242, 244, 247, 0.6);
-        color: rgba(242, 244, 247, 0.95);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .btn-github {
-        border-color: rgba(242, 244, 247, 0.6);
-        color: rgba(242, 244, 247, 0.95);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .win-icon {
-        width: 14px;
-        height: 14px;
-        fill: currentColor;
-        display: block;
-      }
-
-      .docs {
-        position: relative;
-        z-index: 1;
-        width: min(1080px, 92vw);
-        margin: 0 auto 56px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(0, 0, 0, 0.55);
-        padding: 28px;
-      }
-
-      .docs-title {
-        margin: 0 0 16px;
-        font-size: clamp(18px, 2.5vw, 28px);
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-
-      .docs-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .doc-card {
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.04);
-        padding: 14px;
-      }
-
-      .doc-card h3 {
-        margin: 0 0 8px;
-        font-size: 15px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-
-      .doc-card p {
-        margin: 0;
-        color: #d7dbe0;
-        font-size: 13px;
-        line-height: 1.65;
-      }
-
-      @media (max-width: 960px) {
-        .docs-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 760px) {
-        .center {
-          gap: 20px;
-          padding: 20px 16px;
-        }
-
-        .title {
-          font-size: clamp(42px, 14vw, 78px);
-        }
-
-        .loader {
-          min-height: 6.2em;
-          font-size: 12px;
-          line-height: 1.5;
-        }
-
-        .actions {
-          width: min(420px, 100%);
-          flex-direction: row;
-          gap: 8px;
-          justify-content: center;
-        }
-
-        .btn {
-          min-height: 36px;
-          padding: 8px 12px;
-          font-size: 12px;
-          letter-spacing: 0.05em;
-        }
-
-        .docs {
-          width: min(1080px, 94vw);
-          padding: 18px;
-          margin-bottom: 36px;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .docs-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .doc-card p {
-          font-size: 12px;
-          line-height: 1.6;
-        }
+      @keyframes glitch {
+        0% { transform: translate(0) }
+        20% { transform: translate(-2px, 2px) }
+        40% { transform: translate(-2px, -2px) }
+        60% { transform: translate(2px, 2px) }
+        80% { transform: translate(2px, -2px) }
+        100% { transform: translate(0) }
       }
     </style>
-  </head>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.574.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
   <body>
-    <canvas id="fx" aria-hidden="true"></canvas>
-
-    <main class="center">
-      <h1 class="title">[ BEWY ]</h1>
-      <p class="loader" id="loader"></p>
-      <div class="actions">
-        <a class="btn" href="https://github.com/neilsondou/bewy_web/releases/download/download/bewy.zip" download>
-          <svg class="win-icon" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M1 2.2 7.2 1v6.3H1V2.2zm0 11.6 6.2.9V8.5H1v5.3zm8-12.9L15 0v7.3H9V.9zm0 13.9 6 .9V8.5H9v6.3z" />
-          </svg>
-          Download
-        </a>
-        <a class="btn btn-doc" href="#features">Features</a>
-        <a class="btn btn-github" href="https://github.com/neilsondou/bewy" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </main>
-
-    <section class="docs" id="features">
-      <h2 class="docs-title">Core Features</h2>
-      <div class="docs-grid">
-        <article class="doc-card">
-          <h3>Fast File Explorer</h3>
-          <p>Browse and open project files quickly with a clear tree view, optimized for frequent navigation.</p>
-        </article>
-        <article class="doc-card">
-          <h3>Smooth Code Editing</h3>
-          <p>Reliable typing, cursor movement, and line updates keep editing responsive during long coding sessions.</p>
-        </article>
-        <article class="doc-card">
-          <h3>Multi-Tab Workflow</h3>
-          <p>Work with multiple files in parallel and switch context fast without losing current editing state.</p>
-        </article>
-        <article class="doc-card">
-          <h3>Status & Context Bar</h3>
-          <p>Track line, column, encoding, and language details in real time while you edit and navigate code.</p>
-        </article>
-        <article class="doc-card">
-          <h3>Customizable Settings</h3>
-          <p>Adjust themes, behaviors, and editor preferences to match your personal development workflow.</p>
-        </article>
-        <article class="doc-card">
-          <h3>Auto Update</h3>
-          <p>The software can automatically check for updates and keep your local version aligned with the latest release.</p>
-        </article>
-      </div>
-    </section>
-
-    <script>
-      (function () {
-        const canvas = document.getElementById("fx");
-        const ctx = canvas.getContext("2d", { alpha: false });
-
-        const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-        const particleCount = 260;
-        const speed = 0.42;
-        const colors = [
-          "rgba(255, 255, 255, 0.24)",
-          "rgba(240, 240, 240, 0.38)",
-          "rgba(218, 218, 218, 0.52)",
-          "rgba(255, 255, 255, 0.7)"
-        ];
-
-        let w = 0;
-        let h = 0;
-        let particles = [];
-        let t = 0;
-
-        const loaderEl = document.getElementById("loader");
-        const intro = [
-          ">> Initializing BEWY runtime...",
-          ">> Fast file editing and project navigation",
-          ">> Lightweight UI with focused coding workflow",
-          ">> Ready for daily development tasks"
-        ].join("\n");
-
-        let typed = 0;
-
-        function rand(min, max) {
-          return Math.random() * (max - min) + min;
-        }
-
-        function makeParticle() {
-          return {
-            x: rand(0, w),
-            y: rand(0, h),
-            vx: rand(-speed, speed),
-            vy: rand(-speed, speed),
-            s: Math.random() < 0.2 ? 3 : 2,
-            c: colors[(Math.random() * colors.length) | 0],
-            p: rand(0, Math.PI * 2)
-          };
-        }
-
-        function resize() {
-          const cssW = window.innerWidth;
-          const cssH = window.innerHeight;
-          canvas.width = Math.floor(cssW * dpr);
-          canvas.height = Math.floor(cssH * dpr);
-          canvas.style.width = cssW + "px";
-          canvas.style.height = cssH + "px";
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-          ctx.imageSmoothingEnabled = false;
-          w = cssW;
-          h = cssH;
-          particles = Array.from({ length: particleCount }, makeParticle);
-        }
-
-        function flowField(x, y, time) {
-          return Math.sin(y * 0.01 + time) + Math.cos(x * 0.008 - time * 0.75);
-        }
-
-        function step() {
-          t += 0.008;
-
-          ctx.fillStyle = "#000000";
-          ctx.fillRect(0, 0, w, h);
-
-          for (let i = 0; i < particles.length; i += 1) {
-            const p = particles[i];
-            const a = flowField(p.x, p.y, t) + p.p;
-
-            p.vx += Math.cos(a) * 0.012;
-            p.vy += Math.sin(a) * 0.012;
-            p.vx *= 0.98;
-            p.vy *= 0.98;
-            p.x += p.vx;
-            p.y += p.vy;
-
-            if (p.x < -4) p.x = w + 4;
-            if (p.x > w + 4) p.x = -4;
-            if (p.y < -4) p.y = h + 4;
-            if (p.y > h + 4) p.y = -4;
-
-            if ((i + ((t * 100) | 0)) % 23 === 0) {
-              p.s = p.s === 2 ? 3 : 2;
-            }
-
-            ctx.fillStyle = p.c;
-            ctx.fillRect(p.x | 0, p.y | 0, p.s, p.s);
-          }
-
-          requestAnimationFrame(step);
-        }
-
-        function typeLoop() {
-          typed += 1;
-          if (typed > intro.length) {
-            loaderEl.textContent = intro;
-            return;
-          }
-          loaderEl.innerHTML = intro.slice(0, typed) + '<span class="cursor">_</span>';
-          setTimeout(typeLoop, 36);
-        }
-
-        resize();
-        window.addEventListener("resize", resize);
-        requestAnimationFrame(step);
-        typeLoop();
-      })();
-    </script>
-  </body>
+    <div id="root"></div>
+    <div class="scanlines"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>
