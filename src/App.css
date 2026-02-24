@@ -162,13 +162,12 @@ body {
   align-items: flex-start;
 }
 
-/* Bewy 标题：400 字重 + 紧凑间距 + 轻微扁平 */
 .title {
   font-size: 86px; 
-  font-weight: 400; /* 调至常规字重，保持专业感而不突兀 */
+  font-weight: 400;
   line-height: 1.0;
   margin-bottom: 24px;
-  letter-spacing: 0.02em; /* 显著缩小字间距，更显现代感 */
+  letter-spacing: 0.02em;
   color: #fff;
   font-family: var(--font-standard);
   display: flex;
@@ -183,7 +182,7 @@ body {
 .title-cursor {
   display: inline-block;
   width: 12px;
-  height: 2px; /* 随字体变细调至 2px */
+  height: 2px;
   background-color: #555; 
   margin-left: 4px;
   animation: blink 0.8s infinite;
@@ -371,10 +370,80 @@ body {
   font-family: var(--font-serif);
 }
 
-@media (max-width: 600px) {
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 0 24px;
+  }
+
+  .navbar {
+    padding: 32px 0 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav-links a {
+    margin-left: 0;
+    margin-right: 16px;
+    font-size: 13px;
+  }
+
+  .lang-switch {
+    margin-left: 0;
+    margin-top: 4px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .title {
     font-size: 52px;
     min-height: 52px;
     letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 24px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .feature-card {
+    padding: 24px;
+  }
+
+  .art-decorations {
+    opacity: 0.4; /* 在小屏幕上减弱装饰，保持清爽 */
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 42px;
+    min-height: 42px;
   }
 }
