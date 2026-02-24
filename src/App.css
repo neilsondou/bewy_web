@@ -90,7 +90,7 @@ body {
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 60px 0 40px;
+  padding: 60px 0 80px; /* 增加底部间距 */
   align-items: center;
 }
 
@@ -152,7 +152,7 @@ body {
 }
 
 .hero {
-  padding: 40px 0 60px;
+  padding: 80px 0 60px; /* 增加顶部间距，空出一块 */
   text-align: left;
 }
 
@@ -165,7 +165,7 @@ body {
 /* Bewy 标题：300 字重 + 紧凑间距 + 轻微扁平 */
 .title {
   font-size: 86px; 
-  font-weight: 300; /* 调回 300，更显轻盈娟秀 */
+  font-weight: 300;
   line-height: 1.0;
   margin-bottom: 24px;
   letter-spacing: 0.02em; 
@@ -364,7 +364,7 @@ body {
 
 .footer {
   padding: 60px 0;
-  text-align: center; /* 页脚文字始终居中 */
+  text-align: center;
   font-size: 12px;
   color: #444;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -378,14 +378,18 @@ body {
   }
 
   .navbar {
-    padding: 32px 0 24px;
-    flex-direction: row; /* 保持 PC 端的横向布局 */
+    padding: 32px 0 40px; /* 移动端也相应增加留白 */
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
 
+  .hero {
+    padding: 40px 0 60px; /* 移动端顶部留白 */
+  }
+
   .nav-logo img {
-    height: 24px; /* 移动端稍微减小 Logo */
+    height: 24px;
   }
 
   .nav-links {
@@ -406,7 +410,6 @@ body {
     width: auto;
   }
 
-  /* 调大标题 */
   .title {
     font-size: 72px; 
     min-height: 72px;
@@ -414,7 +417,6 @@ body {
     margin-bottom: 24px;
   }
 
-  /* 调大介绍文字 */
   .subtitle {
     font-size: 18px; 
     margin-bottom: 32px;
@@ -450,7 +452,7 @@ body {
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 24px 0;
+    padding: 24px 0 32px;
   }
   
   .nav-links a {
