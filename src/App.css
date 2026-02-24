@@ -162,12 +162,13 @@ body {
   align-items: flex-start;
 }
 
+/* Bewy 标题：300 字重 + 紧凑间距 + 轻微扁平 */
 .title {
   font-size: 86px; 
-  font-weight: 400;
+  font-weight: 300; /* 调回 300，更显轻盈娟秀 */
   line-height: 1.0;
   margin-bottom: 24px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.02em; 
   color: #fff;
   font-family: var(--font-standard);
   display: flex;
@@ -363,7 +364,7 @@ body {
 
 .footer {
   padding: 60px 0;
-  text-align: left;
+  text-align: center; /* 页脚文字始终居中 */
   font-size: 12px;
   color: #444;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -378,34 +379,36 @@ body {
 
   .navbar {
     padding: 32px 0 24px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    flex-direction: row; /* 保持 PC 端的横向布局 */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo img {
+    height: 24px; /* 移动端稍微减小 Logo */
   }
 
   .nav-links {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    width: auto;
+    justify-content: flex-end;
     gap: 12px;
   }
 
   .nav-links a {
-    margin-left: 0;
-    margin-right: 16px;
-    font-size: 13px;
+    margin-left: 12px;
+    margin-right: 0;
+    font-size: 12px;
   }
 
   .lang-switch {
-    margin-left: 0;
-    margin-top: 4px;
-    width: 100%;
-    justify-content: flex-start;
+    margin-left: 12px;
+    margin-top: 0;
+    width: auto;
   }
 
   /* 调大标题 */
   .title {
-    font-size: 72px; /* 调大 */
+    font-size: 72px; 
     min-height: 72px;
     letter-spacing: 0.02em;
     margin-bottom: 24px;
@@ -413,7 +416,7 @@ body {
 
   /* 调大介绍文字 */
   .subtitle {
-    font-size: 18px; /* 调大 */
+    font-size: 18px; 
     margin-bottom: 32px;
     line-height: 1.6;
   }
@@ -446,12 +449,21 @@ body {
 }
 
 @media (max-width: 480px) {
+  .navbar {
+    padding: 24px 0;
+  }
+  
+  .nav-links a {
+    font-size: 11px;
+    margin-left: 8px;
+  }
+
   .title {
-    font-size: 60px; /* 调大 */
+    font-size: 60px; 
     min-height: 60px;
   }
   
   .subtitle {
-    font-size: 16px; /* 调大 */
+    font-size: 16px; 
   }
 }
