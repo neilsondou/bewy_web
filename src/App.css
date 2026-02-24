@@ -370,7 +370,7 @@ body {
   font-family: var(--font-serif);
 }
 
-/* 移动端适配 */
+/* 移动端适配调优 */
 @media (max-width: 768px) {
   .main-container {
     padding: 0 24px;
@@ -403,28 +403,32 @@ body {
     justify-content: flex-start;
   }
 
+  /* 调大标题 */
   .title {
-    font-size: 52px;
-    min-height: 52px;
+    font-size: 72px; /* 调大 */
+    min-height: 72px;
     letter-spacing: 0.02em;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
+  /* 调大介绍文字 */
   .subtitle {
-    font-size: 14px;
-    margin-bottom: 24px;
+    font-size: 18px; /* 调大 */
+    margin-bottom: 32px;
+    line-height: 1.6;
   }
 
   .hero-buttons {
     flex-direction: column;
     width: 100%;
-    gap: 8px;
+    gap: 12px;
   }
 
   .btn {
     width: 100%;
     justify-content: center;
     padding: 12px 24px;
+    font-size: 14px;
   }
 
   .feature-grid {
@@ -437,13 +441,17 @@ body {
   }
 
   .art-decorations {
-    opacity: 0.4; /* 在小屏幕上减弱装饰，保持清爽 */
+    opacity: 0.4;
   }
 }
 
 @media (max-width: 480px) {
   .title {
-    font-size: 42px;
-    min-height: 42px;
+    font-size: 60px; /* 调大 */
+    min-height: 60px;
+  }
+  
+  .subtitle {
+    font-size: 16px; /* 调大 */
   }
 }
