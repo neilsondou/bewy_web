@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import './App.css';
 
 const translations = {
@@ -82,7 +83,7 @@ const App = () => {
       if (!isDeleting) {
         setDisplayText(fullText.substring(0, displayText.length + 1));
         if (displayText === fullText) {
-          setTimeout(() => setIsDeleting(true), 8000); 
+          setTimeout(() => setIsDeleting(true), 8000);
         }
       } else {
         setDisplayText(fullText.substring(0, displayText.length - 1));
@@ -119,7 +120,7 @@ const App = () => {
 
       <div className="main-container">
         <nav className="navbar">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="nav-logo"
@@ -147,29 +148,29 @@ const App = () => {
                 {displayText}
                 <span className="title-cursor" />
               </h1>
-              
+
               <p className="subtitle">
                 {t.heroSubtitle}
                 <span className="author-name">{t.author}</span>
               </p>
-              
+
               <div className="hero-buttons">
-                <a 
-                  href="https://gitee.com/qiumuu/bewyweb/releases/download/0.0.1/Release.zip" 
+                <a
+                  href="https://gitee.com/qiumuu/bewyweb/releases/download/0.0.1/Release.zip"
                   className="btn btn-primary"
                 >
                   {t.downloadZip}
                 </a>
-                <button 
-                  onClick={handleStoreClick}
+                <a
+                  href="https://apps.microsoft.com/detail/9N6ZWQ8826FW?hl=zh&gl=US&ocid=pdpshare"
                   className="btn btn-outline"
                 >
                   {t.msStore}
-                </button>
+                </a>
               </div>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 2, delay: 0.2 }}
@@ -187,7 +188,7 @@ const App = () => {
             <div className="feature-grid">
               <AnimatePresence mode="wait">
                 {t.features.map((f, i) => (
-                  <motion.div 
+                  <motion.div
                     key={lang + i}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -208,7 +209,7 @@ const App = () => {
               <h2>{t.ossTitle}</h2>
               <div className="divider"></div>
             </div>
-            <motion.a 
+            <motion.a
               href="https://github.com/neilsondou/bewy"
               target="_blank"
               rel="noreferrer"
